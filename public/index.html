@@ -15,11 +15,13 @@
     <meta property="og:image" content="https://zanelli.vercel.app/og.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <!-- Async load Google Fonts to prevent render blocking -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap"></noscript>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div class="container">
+    <main class="container">
         <div class="title-group">
             <div class="status">Currently building at Cogniar</div>
             
@@ -47,6 +49,6 @@
             <a href="mailto:gonzalozanelli1@gmail.com">Email</a>
             <span class="wip">Portfolio (WIP)</span>
         </nav>
-    </div>
+    </main>
 </body>
 </html>

@@ -1,29 +1,49 @@
+import { Hono } from "hono";
+import { secureHeaders } from "hono/secure-headers";
+import { serveStatic } from "@hono/node-server/serve-static";
+import { serve } from "@hono/node-server";
 import { join, sep } from "path";
-import satori from "satori";
+import satori, { type Font } from "satori";
 import { Resvg } from "@resvg/resvg-js";
+
+const app = new Hono();
 
 const PUBLIC_DIR = join(import.meta.dir, "public");
 const MAX_URI_LENGTH = 2048;
 
-const SECURITY_HEADERS = {
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "DENY",
-  "Referrer-Policy": "strict-origin-when-cross-origin",
-};
+// Security headers middleware
+app.use(
+  "*",
+  secureHeaders({
+    xContentTypeOptions: "nosniff",
+    xFrameOptions: "DENY",
+    referrerPolicy: "strict-origin-when-cross-origin",
+  })
+);
 
-function secureResponse(body: string | Blob | null, init?: ResponseInit): Response {
-  return new Response(body, {
-    ...init,
-    headers: { ...SECURITY_HEADERS, ...init?.headers },
-  });
-}
+// Method restriction middleware (only GET and HEAD)
+app.use("*", async (c, next) => {
+  if (c.req.method !== "GET" && c.req.method !== "HEAD") {
+    return c.text("Method Not Allowed", 405, { Allow: "GET, HEAD" });
+  }
+  return next();
+});
+
+// URI length validation middleware
+app.use("*", async (c, next) => {
+  const url = new URL(c.req.url);
+  if (url.pathname.length > MAX_URI_LENGTH) {
+    return c.text("URI Too Long", 414);
+  }
+  return next();
+});
 
 // OG Image generation
 const OG_WIDTH = 1200;
 const OG_HEIGHT = 630;
 
 // Cache fonts after first load
-let fontsCache: { name: string; data: ArrayBuffer; weight: number; style: "normal" | "italic" }[] | null = null;
+let fontsCache: Font[] | null = null;
 
 async function loadFonts() {
   if (fontsCache) return fontsCache;
@@ -50,13 +70,13 @@ async function loadFonts() {
   }
 
   const [serifFontData, sansFontData] = await Promise.all([
-    fetch(serifUrlMatch[1]).then((r) => r.arrayBuffer()),
-    fetch(sansUrlMatch[1]).then((r) => r.arrayBuffer()),
+    fetch(serifUrlMatch[1]!).then((r) => r.arrayBuffer()),
+    fetch(sansUrlMatch[1]!).then((r) => r.arrayBuffer()),
   ]);
 
   fontsCache = [
-    { name: "Instrument Serif", data: serifFontData, weight: 400, style: "normal" },
-    { name: "Instrument Sans", data: sansFontData, weight: 500, style: "normal" },
+    { name: "Instrument Serif", data: serifFontData, weight: 400 as const, style: "normal" },
+    { name: "Instrument Sans", data: sansFontData, weight: 500 as const, style: "normal" },
   ];
 
   return fontsCache;
@@ -125,55 +145,39 @@ async function generateOgImage(): Promise<Uint8Array> {
   return resvg.render().asPng();
 }
 
-const server = Bun.serve({
-  port: process.env.PORT ?? 3000,
-  async fetch(request) {
-    // Only allow GET and HEAD methods
-    if (request.method !== "GET" && request.method !== "HEAD") {
-      return secureResponse("Method Not Allowed", {
-        status: 405,
-        headers: { Allow: "GET, HEAD" },
-      });
-    }
-
-    const url = new URL(request.url);
-
-    // Handle OG image generation
-    if (url.pathname === "/og.png") {
-      try {
-        const png = await generateOgImage();
-        return secureResponse(new Blob([png], { type: "image/png" }), {
-          headers: {
-            "Content-Type": "image/png",
-            "Cache-Control": "public, max-age=86400",
-          },
-        });
-      } catch (error) {
-        console.error("OG image generation error:", error);
-        return secureResponse("Internal Server Error", { status: 500 });
-      }
-    }
-
-    // Reject excessively long URIs
-    if (url.pathname.length > MAX_URI_LENGTH) {
-      return secureResponse("URI Too Long", { status: 414 });
-    }
-
-    const pathname = url.pathname === "/" ? "/index.html" : url.pathname;
-    const filePath = join(PUBLIC_DIR, pathname);
-
-    // Prevent directory traversal attacks
-    if (!filePath.startsWith(PUBLIC_DIR + sep)) {
-      return secureResponse("Forbidden", { status: 403 });
-    }
-
-    const file = Bun.file(filePath);
-    if (await file.exists()) {
-      return secureResponse(file);
-    }
-
-    return secureResponse("Not Found", { status: 404 });
-  },
+// OG image route
+app.get("/og.png", async (c) => {
+  try {
+    const png = await generateOgImage();
+    return c.body(png as Uint8Array<ArrayBuffer>, 200, {
+      "Content-Type": "image/png",
+      "Cache-Control": "public, max-age=86400",
+    });
+  } catch (error) {
+    console.error("OG image generation error:", error);
+    return c.text("Internal Server Error", 500);
+  }
 });
 
-console.log(`Server running at http://localhost:${server.port}`);
+// Path traversal protection middleware for static files
+app.use("*", async (c, next) => {
+  const url = new URL(c.req.url);
+  const pathname = url.pathname === "/" ? "/index.html" : url.pathname;
+  const filePath = join(PUBLIC_DIR, pathname);
+
+  // Prevent directory traversal attacks
+  if (!filePath.startsWith(PUBLIC_DIR + sep)) {
+    return c.text("Forbidden", 403);
+  }
+
+  return next();
+});
+
+// Static file serving (for local development)
+app.use("*", serveStatic({ root: "./public" }));
+
+// Fallback 404
+app.notFound((c) => c.text("Not Found", 404));
+
+// Export for Vercel and imports
+export default app;
