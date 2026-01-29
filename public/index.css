@@ -1,0 +1,197 @@
+:root {
+  --bg-color: #fafafa;
+  --text-primary: #121212;
+  --text-secondary: #666666;
+  --accent-color: #000;
+  --font-main: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --max-width: 800px;
+  --padding-x: 2rem;
+  --transition-smooth: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  max-width: var(--max-width);
+  width: 100%;
+  padding: 0 var(--padding-x);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: reveal 1s forwards;
+}
+
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+header {
+  margin-bottom: 2.5rem;
+}
+
+h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 400;
+  line-height: 1.1; /* Explicit line-height */
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.status {
+  font-size: 0.9rem;
+  line-height: 1.2; /* Fixed line-height */
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 1.2rem; /* Reserve space */
+}
+
+.status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transform: translateY(-1px); /* Compensation for uppercase vertical center */
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: translateY(-1px) scale(1); box-shadow: 0 0 0 0px rgba(16, 185, 129, 0.2); }
+  70% { transform: translateY(-1px) scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  100% { transform: translateY(-1px) scale(1); box-shadow: 0 0 0 0px rgba(16, 185, 129, 0); }
+}
+
+.bio {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.bio strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.education {
+  background: rgba(0, 0, 0, 0.02);
+  padding: 1.5rem 2rem;
+  border-radius: 1px;
+  border-left: 1px solid var(--accent-color);
+  margin-bottom: 2.5rem;
+  transition: var(--transition-smooth);
+}
+
+.education:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.education p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+
+.education .uni {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  font-style: italic;
+}
+
+nav {
+  display: flex;
+  gap: 2.5rem;
+}
+
+nav a, .wip {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.wip {
+  opacity: 0.5;
+  cursor: default;
+  font-style: italic;
+}
+
+nav a:hover {
+  color: var(--text-primary);
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media (max-width: 600px) {
+  body {
+    align-items: center;
+    overflow-y: auto; /* Allow scroll on very small screens if content overflows */
+  }
+  
+  .container {
+    padding: 2rem var(--padding-x);
+  }
+  
+  nav {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+}
