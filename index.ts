@@ -3,6 +3,7 @@ import { secureHeaders } from "hono/secure-headers";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { serve } from "@hono/node-server";
 import { join, sep } from "path";
+import { readdir, stat } from "node:fs/promises";
 import satori, { type Font } from "satori";
 import { Resvg } from "@resvg/resvg-js";
 
@@ -155,6 +156,76 @@ app.get("/og.png", async (c) => {
     });
   } catch (error) {
     console.error("OG image generation error:", error);
+    return c.text("Internal Server Error", 500);
+  }
+});
+
+// XML entity escaping for sitemap URLs
+function escapeXml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+// Sitemap route
+app.get("/sitemap.xml", async (c) => {
+  try {
+    // Use request origin for dynamic base URL
+    const url = new URL(c.req.url);
+    const baseUrl = `${url.protocol}//${url.host}`;
+    
+    const files = await readdir(PUBLIC_DIR, { recursive: true });
+
+    // Filter HTML files and get their stats
+    const htmlFiles = files.filter((f) => f.endsWith(".html"));
+    
+    const entries = await Promise.all(
+      htmlFiles.map(async (f) => {
+        const normalized = f.replace(/\\/g, "/");
+        const filePath = join(PUBLIC_DIR, f);
+        
+        // Get actual file modification time
+        const fileStat = await stat(filePath);
+        const lastmod = fileStat.mtime.toISOString().split("T")[0];
+        
+        // Convert file path to URL path
+        let urlPath: string;
+        if (normalized === "index.html") {
+          urlPath = "/";
+        } else if (normalized.endsWith("/index.html")) {
+          // Subdirectory with index.html: /about/index.html -> /about/
+          urlPath = "/" + normalized.replace(/\/index\.html$/, "/");
+        } else {
+          // Regular HTML file: /about.html -> /about
+          urlPath = "/" + normalized.replace(/\.html$/, "");
+        }
+        
+        const fullUrl = escapeXml(baseUrl + urlPath);
+        const priority = urlPath === "/" ? "1.0" : "0.8";
+        
+        return `  <url>
+    <loc>${fullUrl}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+      })
+    );
+
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries.join("\n")}
+</urlset>`;
+
+    return c.body(sitemap, 200, {
+      "Content-Type": "application/xml",
+      "Cache-Control": "public, max-age=86400",
+    });
+  } catch (error) {
+    console.error("Sitemap generation error:", error);
     return c.text("Internal Server Error", 500);
   }
 });
