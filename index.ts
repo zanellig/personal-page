@@ -215,6 +215,18 @@ app.use("*", async (c, next) => {
   return next();
 });
 
+// Cache control middleware for static files
+app.use("*", async (c, next) => {
+  await next();
+  if (c.res.status === 200) {
+    const path = c.req.path;
+    // Cache CSS and images for 1 day
+    if (path.endsWith(".css") || path.endsWith(".ico") || path.endsWith(".svg")) {
+      c.header("Cache-Control", "public, max-age=86400");
+    }
+  }
+});
+
 // Static file serving (for local development)
 app.use("*", serveStatic({ root: "./public" }));
 
