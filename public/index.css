@@ -253,6 +253,16 @@ nav a:hover::after {
     font-size: 1.3rem;
   }
 
+  .education p {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .desktop-separator {
+    display: none;
+  }
+
   nav {
     flex-direction: column;
     gap: 1.25rem;
