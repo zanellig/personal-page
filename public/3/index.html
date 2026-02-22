@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gonzalo Zanelli - Editorial</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        background-color: #f8f7f3;
+        color: #1a1a1a;
+        font-family: "Cormorant Garamond", serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .main-wrapper {
+        padding: 3vh 4vw;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+      }
+      .magazine {
+        width: 100%;
+        max-width: 1400px;
+        height: 100%;
+        max-height: 900px;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
+        padding: 4vh 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .magazine::before,
+      .magazine::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: #1a1a1a;
+      }
+      .magazine::before {
+        top: 4px;
+      }
+      .magazine::after {
+        bottom: 4px;
+      }
+
+      .header {
+        text-align: center;
+        margin-top: 2vh;
+        margin-bottom: 4vh;
+      }
+      .issue-info {
+        font-family: "Inter", sans-serif;
+        font-size: min(0.75rem, 1.5vh);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #666;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 1vh;
+        margin-bottom: 2vh;
+      }
+      h1 {
+        font-size: min(10vw, 13vh);
+        font-weight: 300;
+        margin: 0;
+        line-height: 0.85;
+        letter-spacing: -0.04em;
+      }
+      h1 span {
+        font-style: italic;
+        color: #92846f;
+      }
+      .subtitle {
+        font-family: "Inter", sans-serif;
+        font-size: min(1rem, 2vh);
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        margin-top: 2vh;
+        color: #1a1a1a;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.2fr 2fr 1.5fr;
+        gap: 6vw;
+        flex: 1;
+        align-content: center;
+        align-items: start;
+        margin-top: 2vh;
+      }
+      @media (max-width: 1024px) {
+        body,
+        html {
+          height: auto;
+          min-height: 100dvh;
+          overflow-y: auto;
+        }
+        .main-wrapper {
+          height: auto;
+          min-height: 100dvh;
+        }
+        .magazine {
+          max-height: none;
+          height: auto;
+        }
+        .grid {
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto auto;
+          align-items: start;
+          align-content: center;
+        }
+        .grid > div:last-child {
+          grid-column: span 2;
+        }
+      }
+      @media (max-width: 768px) {
+        .grid {
+          grid-template-columns: 1fr;
+          align-content: center;
+          gap: 2vh;
+        }
+        .grid > div:last-child {
+          grid-column: span 1;
+        }
+      }
+
+      .col {
+        position: relative;
+      }
+      .col:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        right: -3vw;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: #e5e5e5;
+      }
+      @media (max-width: 1024px) {
+        .col::after {
+          display: none;
+        }
+        .col {
+          padding-bottom: 3vh;
+        }
+      }
+
+      .col-title {
+        font-family: "Inter", sans-serif;
+        font-size: min(0.85rem, 1.7vh);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        border-bottom: 1px solid #1a1a1a;
+        padding-bottom: 0.5vh;
+        margin-bottom: 2vh;
+        display: inline-block;
+      }
+
+      p {
+        font-size: min(1.2rem, 2.3vh);
+        margin: 0 0 1vh 0;
+      }
+
+      .dropcap {
+        font-size: min(1.3rem, 2.5vh);
+        color: #444;
+        max-width: 500px;
+      }
+      @media (min-width: 769px) {
+        .dropcap::first-letter {
+          font-size: min(6rem, 10vh);
+          float: left;
+          margin: 0.1em 0.15em 0 0;
+          line-height: 0.65;
+          color: #92846f;
+          font-style: italic;
+        }
+      }
+
+      .details {
+        font-style: italic;
+      }
+
+      .links {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5vh;
+        margin-top: 2vh;
+      }
+      .links a {
+        font-family: "Inter", sans-serif;
+        font-size: min(1rem, 2vh);
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: #1a1a1a;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        transition: color 0.3s;
+      }
+      .links a::before {
+        content: "—";
+        margin-right: 1vw;
+        color: #92846f;
+        transition: margin 0.3s;
+      }
+      .links a:hover {
+        color: #92846f;
+      }
+      .links a:hover::before {
+        margin-right: 2vw;
+        margin-left: 0.5vw;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="magazine">
+        <div class="issue-info">
+          <span>Vol. I — The Portfolio</span>
+          <span>Est. Twenty Twenty Six</span>
+          <span>Buenos Aires, AR</span>
+        </div>
+
+        <div class="header">
+          <h1>Gonzalo<br /><span>Zanelli</span></h1>
+          <div class="subtitle">Software Engineer & MLOps</div>
+        </div>
+
+        <div class="grid">
+          <div class="col">
+            <span class="col-title">Current Focus</span>
+            <p>
+              Currently building at <strong>Cogniar</strong>. Dedicated to
+              crafting resilient systems and pushing the boundaries of what is
+              possible with web technologies and machine learning.
+            </p>
+          </div>
+
+          <div class="col details">
+            <span class="col-title">The Profile</span>
+            <p class="dropcap">
+              Software Engineer based in Buenos Aires, specialized in building
+              high-performance applications with Bun, TypeScript, and Python. I
+              design robust systems and automate complex workflows using
+              AI-driven strategies.
+            </p>
+            <p style="margin-top: 2vh">
+              Information Systems Engineering student at UTN FRBA.
+            </p>
+          </div>
+
+          <div class="col">
+            <span class="col-title">Index & Connect</span>
+            <div class="links">
+              <a href="https://github.com/zanellig" target="_blank"
+                >GitHub Repository</a
+              >
+              <a href="https://linkedin.com/in/gzanelli" target="_blank"
+                >LinkedIn Profile</a
+              >
+              <a href="mailto:gonzalozanelli1@gmail.com"
+                >Direct Correspondence</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

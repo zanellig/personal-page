@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gonzalo Zanelli — Midnight Luxe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@1,600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+      :root {
+        --primary: #0d0d12;
+        --accent: #c9a84c;
+        --bg: #faf8f5;
+        --text: #2a2a35;
+        --font-heading: "Inter", sans-serif;
+        --font-display: "Inter", sans-serif;
+        --font-drama: "Playfair Display", serif;
+        --font-mono: "JetBrains Mono", monospace;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-heading);
+        background-color: var(--primary);
+        color: var(--bg);
+        overflow-x: hidden;
+        background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-heading);
+        letter-spacing: -0.04em;
+      }
+      .drama {
+        font-family: var(--font-drama);
+        font-style: italic;
+        font-weight: 600;
+        color: var(--accent);
+      }
+      .mono {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Navbar */
+      .navbar {
+        position: fixed;
+        top: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: max-content;
+        max-width: 90vw;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 3rem;
+        z-index: 100;
+        transition: all 0.4s ease;
+        color: var(--bg);
+      }
+      .navbar.scrolled {
+        background: rgba(13, 13, 18, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(250, 248, 245, 0.1);
+      }
+      .nav-logo {
+        font-weight: 600;
+        text-decoration: none;
+        color: inherit;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: inherit;
+        font-size: 0.9rem;
+        transition: transform 0.3s;
+        display: inline-block;
+      }
+      .nav-links a:hover {
+        transform: translateY(-1px);
+        color: var(--accent);
+      }
+
+      .btn {
+        background: var(--accent);
+        color: var(--primary);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 2rem;
+        font-weight: 600;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+      }
+      .btn .btn-layer {
+        position: absolute;
+        inset: 0;
+        background: #ffffff;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        z-index: -1;
+      }
+      .btn:hover .btn-layer {
+        transform: translateY(0);
+      }
+      .btn:hover {
+        transform: scale(1.03);
+      }
+
+      /* Hero */
+      .hero {
+        height: 100dvh;
+        display: flex;
+        align-items: flex-end;
+        padding: 4rem;
+        position: relative;
+        background: url("https://images.unsplash.com/photo-1629904853716-f0bc54fea4ba?q=80&w=2400&auto=format&fit=crop")
+          center/cover;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, var(--primary) 5%, transparent 95%);
+        opacity: 0.95;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 10;
+        max-width: 900px;
+      }
+      .hero-title-part1 {
+        font-size: 2.5rem;
+        line-height: 1;
+        display: block;
+        opacity: 0;
+      }
+      .hero-title-part2 {
+        font-size: 9rem;
+        line-height: 0.85;
+        display: block;
+        margin-top: 1rem;
+        opacity: 0;
+      }
+      .hero-desc {
+        margin-top: 3rem;
+        font-size: 1.25rem;
+        opacity: 0;
+        max-width: 600px;
+        color: rgba(250, 248, 245, 0.8);
+      }
+      .hero-cta {
+        margin-top: 3rem;
+        opacity: 0;
+      }
+
+      /* Features */
+      .features {
+        padding: 8rem 4rem;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .card {
+        background: #fff;
+        border: 1px solid rgba(42, 42, 53, 0.1);
+        border-radius: 2rem;
+        padding: 3rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
+        position: relative;
+        overflow: hidden;
+      }
+      .card-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .card-desc {
+        color: rgba(42, 42, 53, 0.7);
+      }
+
+      /* Shuffler */
+      .shuffler-container {
+        height: 120px;
+        position: relative;
+        margin-top: 2rem;
+      }
+      .shuffler-item {
+        position: absolute;
+        width: 100%;
+        padding: 1.5rem;
+        background: var(--primary);
+        color: var(--accent);
+        border-radius: 1rem;
+        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        border: 1px solid rgba(201, 168, 76, 0.3);
+        font-family: var(--font-drama);
+        font-size: 1.2rem;
+      }
+
+      /* Typewriter */
+      .typewriter-box {
+        background: var(--primary);
+        color: var(--accent);
+        padding: 1.5rem;
+        border-radius: 1rem;
+        margin-top: 2rem;
+        font-family: var(--font-mono);
+        height: 120px;
+      }
+      .status-dot-feed {
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        border-radius: 50%;
+        display: inline-block;
+        animation: blink 1s step-end infinite;
+      }
+      .cursor {
+        display: inline-block;
+        width: 8px;
+        height: 1em;
+        background: var(--bg);
+        animation: blink 1s step-end infinite;
+        vertical-align: bottom;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* Scheduler */
+      .scheduler-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.5rem;
+        margin-top: 2rem;
+      }
+      .day-cell {
+        aspect-ratio: 1;
+        background: rgba(42, 42, 53, 0.05);
+        border-radius: 0.5rem;
+        display: grid;
+        place-items: center;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--text);
+        transition: all 0.3s;
+      }
+      .day-cell.active {
+        background: var(--accent);
+        color: var(--primary);
+      }
+
+      /* Philosophy */
+      .philosophy {
+        padding: 12rem 4rem;
+        background: var(--primary);
+        color: var(--bg);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .phil-sub {
+        font-size: 1.5rem;
+        opacity: 0.6;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      .phil-main {
+        font-size: 5rem;
+        margin-top: 2rem;
+      }
+      .phil-main span {
+        color: var(--accent);
+      }
+
+      /* Protocol */
+      .protocol {
+        position: relative;
+        background: var(--primary);
+      }
+      .protocol-card {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: sticky;
+        top: 0;
+        background: var(--primary);
+        border-top: 1px solid rgba(250, 248, 245, 0.05);
+      }
+      .protocol-content {
+        text-align: center;
+        max-width: 600px;
+        padding: 4rem;
+        border: 1px solid rgba(201, 168, 76, 0.2);
+        border-radius: 2rem;
+      }
+      .protocol-num {
+        font-family: var(--font-mono);
+        font-size: 2rem;
+        color: var(--accent);
+        margin-bottom: 2rem;
+      }
+
+      /* Get Started */
+      .get-started {
+        padding: 10rem 4rem;
+        text-align: center;
+        background: var(--primary);
+        border-top: 1px solid rgba(250, 248, 245, 0.05);
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--bg);
+        color: var(--text);
+        padding: 8rem 4rem 4rem;
+        border-radius: 4rem 4rem 0 0;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 4rem;
+      }
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        border-radius: 50%;
+        display: inline-block;
+        box-shadow: 0 0 10px var(--accent);
+        animation: pulse 2s infinite;
+      }
+
+      @media (max-width: 768px) {
+        .hero-title-part2 {
+          font-size: 4rem;
+        }
+        .features {
+          grid-template-columns: 1fr;
+          padding: 4rem 2rem;
+        }
+        .hero {
+          padding: 2rem;
+        }
+        .phil-main {
+          font-size: 3rem;
+        }
+        .footer {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <a href="#" class="nav-logo">Gonzalo Zanelli</a>
+      <div class="nav-links">
+        <a href="https://github.com/zanellig">GitHub</a>
+        <a href="https://linkedin.com/in/gzanelli">LinkedIn</a>
+      </div>
+      <a href="#contact" class="btn"
+        ><span class="btn-layer"></span><span class="btn-text">Connect</span></a
+      >
+    </nav>
+
+    <section class="hero">
+      <div class="hero-content">
+        <span class="hero-title-part1 mono">System architecture meets</span>
+        <h1 class="hero-title-part2 drama">Precision.</h1>
+        <p class="hero-desc">
+          Bespoke software engineering and MLOps built on Bun and TypeScript for
+          maximum performance.
+        </p>
+        <div class="hero-cta">
+          <a href="#features" class="btn"
+            ><span class="btn-layer"></span
+            ><span class="btn-text">Discover Capabilities</span></a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <div class="card">
+        <h3 class="card-title">Backend Engineering</h3>
+        <p class="card-desc">
+          Robust TypeScript systems optimized for production environments.
+        </p>
+        <div class="shuffler-container" id="shuffler">
+          <div
+            class="shuffler-item"
+            style="top: 0; z-index: 3; transform: scale(1)"
+          >
+            API Architecture
+          </div>
+          <div
+            class="shuffler-item"
+            style="top: 10px; z-index: 2; transform: scale(0.95); opacity: 0.8"
+          >
+            Data Processing
+          </div>
+          <div
+            class="shuffler-item"
+            style="top: 20px; z-index: 1; transform: scale(0.9); opacity: 0.6"
+          >
+            System Design
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">MLOps Workflows</h3>
+        <p class="card-desc">
+          Intelligent automation bridging data science and deployment.
+        </p>
+        <div class="typewriter-box">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              margin-bottom: 1rem;
+              font-family: var(--font-mono);
+              font-size: 0.75rem;
+              text-transform: uppercase;
+            "
+          >
+            <span class="status-dot-feed"></span> Live Feed
+          </div>
+          <div><span id="typed"></span><span class="cursor"></span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Continuous Execution</h3>
+        <p class="card-desc">
+          Methodical deployment rhythms defining clear technological impact.
+        </p>
+        <div
+          class="scheduler-container"
+          style="position: relative; margin-top: 2rem"
+        >
+          <div class="scheduler-grid">
+            <div class="day-cell">S</div>
+            <div class="day-cell">M</div>
+            <div class="day-cell">T</div>
+            <div class="day-cell">W</div>
+            <div class="day-cell target-cell">T</div>
+            <div class="day-cell">F</div>
+            <div class="day-cell">S</div>
+          </div>
+          <button
+            class="btn btn-save"
+            style="
+              margin-top: 1rem;
+              width: 100%;
+              font-size: 0.85rem;
+              padding: 0.5rem;
+            "
+          >
+            <span class="btn-layer"></span
+            ><span class="btn-text" style="z-index: 2; position: relative"
+              >Deploy Sequence</span
+            >
+          </button>
+          <svg
+            class="animated-cursor"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="var(--primary)"
+            stroke="var(--bg)"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              z-index: 10;
+              pointer-events: none;
+              opacity: 0;
+              filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+            "
+          >
+            <path d="M4 4l7.07 17 2.51-7.39L21 11.07z" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="philosophy">
+      <div
+        class="phil-bg"
+        style="
+          position: absolute;
+          inset: -10%;
+          background: url(&quot;https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2400&auto=format&fit=crop&quot;)
+            center/cover;
+          opacity: 0.2;
+        "
+      ></div>
+      <div class="phil-content" style="position: relative; z-index: 1">
+        <div class="phil-sub mono">Most engineering focuses on code.</div>
+        <div class="phil-main drama">We focus on <span>Elegance</span>.</div>
+      </div>
+    </section>
+
+    <section class="protocol">
+      <div class="protocol-card">
+        <div class="protocol-content">
+          <div class="protocol-num">01</div>
+          <h2>Architectural Foundations</h2>
+          <p style="color: rgba(250, 248, 245, 0.7); margin-top: 1rem">
+            Defining schemas and system boundaries using Python and TypeScript.
+          </p>
+        </div>
+      </div>
+      <div class="protocol-card">
+        <div class="protocol-content">
+          <div class="protocol-num">02</div>
+          <h2>Operational Flow</h2>
+          <p style="color: rgba(250, 248, 245, 0.7); margin-top: 1rem">
+            Implementing high-throughput pipelines with Bun environment.
+          </p>
+        </div>
+      </div>
+      <div class="protocol-card">
+        <div class="protocol-content">
+          <div class="protocol-num">03</div>
+          <h2>Model Integration</h2>
+          <p style="color: rgba(250, 248, 245, 0.7); margin-top: 1rem">
+            Orchestrating AI agents with precision tooling and flawless logic.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="get-started" id="get-started">
+      <h2 style="font-size: 3rem; margin-bottom: 2rem; color: var(--bg)">
+        Ready to design your architecture?
+      </h2>
+      <a href="#contact" class="btn"
+        ><span class="btn-layer"></span
+        ><span class="btn-text">Initiate Build</span></a
+      >
+    </section>
+
+    <footer class="footer" id="contact">
+      <div>
+        <h2>Gonzalo Zanelli</h2>
+        <p>Bespoke Software Engineering</p>
+        <p class="mono" style="margin-top: 1rem; color: var(--accent)">
+          <span class="status-dot"></span> Signal Active
+        </p>
+      </div>
+      <div class="nav-links" style="flex-direction: column">
+        <div style="opacity: 0.5; font-size: 0.8rem; text-transform: uppercase">
+          Direct Lines
+        </div>
+        <a href="https://github.com/zanellig">GitHub</a>
+        <a href="https://linkedin.com/in/gzanelli">LinkedIn</a>
+        <a href="mailto:gonzalozanelli1@gmail.com">Email</a>
+      </div>
+      <div class="nav-links" style="flex-direction: column">
+        <div style="opacity: 0.5; font-size: 0.8rem; text-transform: uppercase">
+          Information
+        </div>
+        <a href="#">Security Protocol</a>
+        <a href="#">Engagement Terms</a>
+      </div>
+    </footer>
+
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Navbar blur on scroll
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > window.innerHeight * 0.5)
+          document.getElementById("navbar").classList.add("scrolled");
+        else document.getElementById("navbar").classList.remove("scrolled");
+      });
+
+      // Hero
+      gsap.to(".hero-title-part1", {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out",
+        delay: 0.2,
+      });
+      gsap.to(".hero-title-part2", {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out",
+        delay: 0.4,
+      });
+      gsap.to(".hero-desc", {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out",
+        delay: 0.6,
+      });
+      gsap.to(".hero-cta", {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out",
+        delay: 0.8,
+      });
+
+      // Features
+      gsap.utils.toArray(".card").forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: { trigger: card, start: "top 85%" },
+          y: 50,
+          opacity: 0,
+          duration: 0.8,
+          delay: i * 0.15,
+          ease: "power2.out",
+        });
+      });
+
+      // Shuffler
+      const shufflerItems = gsap.utils.toArray(".shuffler-item");
+      if (shufflerItems.length > 0) {
+        setInterval(() => {
+          let last = shufflerItems.pop();
+          shufflerItems.unshift(last);
+          shufflerItems.forEach((item, index) => {
+            let scale = index === 0 ? 1 : index === 1 ? 0.95 : 0.9;
+            let opacity = index === 0 ? 1 : index === 1 ? 0.8 : 0.6;
+            let top = index * 10;
+            let zi = 3 - index;
+            gsap.to(item, {
+              top: `${top}px`,
+              scale: scale,
+              opacity: opacity,
+              zIndex: zi,
+              duration: 0.6,
+              ease: "back.out(1.5)",
+            });
+          });
+        }, 3000);
+      }
+
+      // Typewriter
+      const typedText = "CONNECTING TELEMETRY... OPTIMAL.";
+      let i = 0;
+      function typeWriter() {
+        if (i < typedText.length) {
+          document.getElementById("typed").innerHTML += typedText.charAt(i);
+          i++;
+          setTimeout(typeWriter, 80);
+        }
+      }
+      ScrollTrigger.create({
+        trigger: ".typewriter-box",
+        start: "top 80%",
+        onEnter: typeWriter,
+        once: true,
+      });
+
+      // Scheduler Cursor Animation
+      const schedulerContainer = document.querySelector(".scheduler-container");
+      const schedulerCursor = document.querySelector(".animated-cursor");
+      const targetCell = document.querySelector(".target-cell");
+      const saveBtn = document.querySelector(".btn-save");
+
+      if (schedulerContainer && schedulerCursor && targetCell && saveBtn) {
+        let tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+        tl.set(schedulerCursor, { x: 100, y: 150, opacity: 0 });
+        tl.to(schedulerCursor, {
+          duration: 1,
+          x: () => targetCell.offsetLeft + targetCell.offsetWidth / 2,
+          y: () => targetCell.offsetTop + targetCell.offsetHeight / 2,
+          opacity: 1,
+          ease: "power2.inOut",
+        });
+        tl.to(schedulerCursor, { scale: 0.8, duration: 0.1 });
+        tl.to(targetCell, { scale: 0.9, duration: 0.1 }, "<");
+        tl.to(schedulerCursor, { scale: 1, duration: 0.1 });
+        tl.to(
+          targetCell,
+          {
+            scale: 1,
+            backgroundColor: "var(--accent)",
+            color: "var(--primary)",
+            duration: 0.1,
+          },
+          "<",
+        );
+        tl.to(schedulerCursor, {
+          x: () => saveBtn.offsetLeft + saveBtn.offsetWidth / 2,
+          y: () => saveBtn.offsetTop + saveBtn.offsetHeight / 2,
+          duration: 1,
+          ease: "power2.inOut",
+          delay: 0.5,
+        });
+        tl.to(schedulerCursor, { scale: 0.8, duration: 0.1 });
+        tl.to(saveBtn, { scale: 0.95, duration: 0.1 }, "<");
+        tl.to(schedulerCursor, { scale: 1, duration: 0.1 });
+        tl.to(saveBtn, { scale: 1, duration: 0.1 }, "<");
+        tl.to(schedulerCursor, { opacity: 0, y: "+=30", duration: 0.5 });
+        tl.set(targetCell, { clearProps: "all" });
+      }
+
+      // Philosophy
+      gsap.from(".phil-sub", {
+        scrollTrigger: { trigger: ".philosophy", start: "top 70%" },
+        opacity: 0,
+        y: 30,
+        duration: 1,
+      });
+      gsap.from(".phil-main", {
+        scrollTrigger: { trigger: ".philosophy", start: "top 60%" },
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        ease: "power3.out",
+      });
+      gsap.to(".phil-bg", {
+        yPercent: 20,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".philosophy",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      // Protocol Stacking
+      const cards = gsap.utils.toArray(".protocol-card");
+      cards.forEach((card, index) => {
+        if (index < cards.length - 1) {
+          gsap.to(card, {
+            scale: 0.9,
+            opacity: 0.5,
+            filter: "blur(10px)",
+            scrollTrigger: {
+              trigger: cards[index + 1],
+              start: "top bottom",
+              end: "top center",
+              scrub: true,
+            },
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

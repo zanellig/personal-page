@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gonzalo Zanelli - Terminal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #050505;
+        color: #33ff33;
+        font-family: "Fira Code", monospace;
+        margin: 0;
+        padding: 2vh 2vw;
+        height: 100vh;
+        height: 100dvh;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      /* CRT overlay */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+          linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+          linear-gradient(
+            90deg,
+            rgba(255, 0, 0, 0.03),
+            rgba(0, 255, 0, 0.01),
+            rgba(0, 0, 255, 0.03)
+          );
+        background-size:
+          100% 4px,
+          3px 100%;
+        pointer-events: none;
+        z-index: 999;
+      }
+      .terminal {
+        width: 800px;
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
+        background: #0a0a0a;
+        border: 1px solid #33ff33;
+        padding: 3vh 3vw;
+        box-sizing: border-box;
+        box-shadow:
+          0 0 20px rgba(51, 255, 51, 0.2),
+          inset 0 0 10px rgba(51, 255, 51, 0.1);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .header-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #33ff33;
+        color: #050505;
+        padding: 0.25vh 1vw;
+        font-weight: bold;
+        font-size: min(0.9rem, 2vh);
+        display: flex;
+        justify-content: space-between;
+      }
+      .content {
+        margin-top: 1vh;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      .command {
+        margin-bottom: 0.25vh;
+        color: #fff;
+        font-size: min(1rem, 2.2vh);
+      }
+      .prompt::before {
+        content: "guest@zanelli:~$ ";
+        color: #ff33ff;
+        text-shadow: 0 0 5px rgba(255, 51, 255, 0.5);
+      }
+      .output {
+        margin-bottom: 2vh;
+        line-height: 1.4;
+        color: #a3ffa3;
+        font-size: min(0.95rem, 2vh);
+        white-space: pre-wrap;
+        text-shadow: 0 0 2px rgba(51, 255, 51, 0.4);
+      }
+      .cursor {
+        display: inline-block;
+        width: 10px;
+        height: 1.2em;
+        background: #33ff33;
+        vertical-align: middle;
+        animation: blink 1s step-end infinite;
+        box-shadow: 0 0 8px #33ff33;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+      .logo {
+        color: #33ff33;
+        font-size: min(1.4vw, 0.75rem);
+        text-shadow: 0 0 5px #33ff33;
+        margin: 0 0 2vh 0;
+      }
+      a {
+        color: #33ffff;
+        text-decoration: none;
+        position: relative;
+        padding: 0 4px;
+      }
+      a:hover {
+        background: #33ffff;
+        color: #050505;
+        text-shadow: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="terminal">
+      <div class="header-bar">
+        <span>bash - 80x24</span>
+        <span>tty1</span>
+      </div>
+      <div class="content">
+        <!-- prettier-ignore -->
+        <!-- prettier-ignore -->
+        <pre class="logo">
+   ____                      _         _____                _ _ _ 
+  / ___| ___  _ __  ______ _| | ___   |__  /__ _ _ __   ___| | (_)
+ | |  _ / _ \| '_ \|_  / _` | |/ _ \    / // _` | '_ \ / _ \ | | |
+ | |_| | (_) | | | |/ / (_| | | (_) |  / /| (_| | | | |  __/ | | |
+  \____|\___/|_| |_/___\__,_|_|\___/  /____\__,_|_| |_|\___|_|_|_|</pre>
+
+        <!-- prettier-ignore -->
+        <div class="command"><span class="prompt"></span> cat profile.txt</div>
+        <!-- prettier-ignore -->
+        <div class="output">
+NAME: Gonzalo Zanelli
+TITLE: Software Engineer & MLOps
+LOCATION: Buenos Aires, Argentina
+STATUS: Currently building at Cogniar</div>
+
+        <!-- prettier-ignore -->
+        <div class="command"><span class="prompt"></span> get-skills --format=short</div>
+        <!-- prettier-ignore -->
+        <div class="output">
+> Building high-performance applications
+> Bun, TypeScript, Python
+> Robust systems architecture
+> AI-driven automation & MLOps</div>
+
+        <!-- prettier-ignore -->
+        <div class="command"><span class="prompt"></span> ping -c 3 connections</div>
+        <!-- prettier-ignore -->
+        <div class="output">
+64 bytes from github.com (4.228.31.150): type=<a href="https://github.com/zanellig" target="_blank">GitHub</a> icmp_seq=1 ttl=248 time=51.6 ms
+64 bytes from linkedin.com (150.171.22.12): type=<a href="https://linkedin.com/in/gzanelli" target="_blank">LinkedIn</a> icmp_seq=1 ttl=248 time=48.7 ms
+64 bytes from outlook.com (52.96.172.98): type=<a href="mailto:gonzalozanelli1@gmail.com">Email</a> icmp_seq=1 ttl=248 time=161 ms</div>
+
+        <div class="command">
+          <span class="prompt"></span> <span class="cursor"></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
