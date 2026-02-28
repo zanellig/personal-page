@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gonzalo Zanelli — Software Engineer &amp; MLOps</title>
+    <meta
+      name="description"
+      content="Software Engineer based in Buenos Aires, Argentina. Focused on Bun, TypeScript, and AI-powered solutions."
+    />
+    <meta name="author" content="Gonzalo Zanelli" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="canonical" href="https://zanelli.vercel.app/10" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Gonzalo Zanelli — Software Engineer &amp; MLOps"
+    />
+    <meta
+      property="og:description"
+      content="Personal site and portfolio of Gonzalo Zanelli, focused on software engineering and MLOps."
+    />
+    <meta property="og:url" content="https://zanelli.vercel.app/10" />
+    <meta property="og:image" content="https://zanelli.vercel.app/og.png" />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Gonzalo Zanelli",
+        "url": "https://zanelli.vercel.app/",
+        "jobTitle": "Software Engineer",
+        "worksFor": { "@type": "Organization", "name": "Cogniar" },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Universidad Tecnológica Nacional (UTN FRBA)"
+        },
+        "homeLocation": { "@type": "Place", "name": "Buenos Aires, Argentina" },
+        "knowsAbout": [
+          "Software Engineering",
+          "MLOps",
+          "TypeScript",
+          "Bun",
+          "Python",
+          "AI"
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Manrope:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ——— Design: "Obsidian" — dark editorial, split layout, geometric precision ——— */
+      :root {
+        --bg: #0d1117;
+        --bg-surface: #161b22;
+        --border: #21262d;
+        --text-primary: #e6edf3;
+        --text-secondary: #8b949e;
+        --accent: #58a6ff;
+        --accent-dim: rgba(88, 166, 255, 0.12);
+        --green: #3fb950;
+        --font-sans: "Manrope", sans-serif;
+        --font-serif: "Newsreader", Georgia, serif;
+        --font-mono: "Geist Mono", monospace;
+        --focus-ring: 0 0 0 3px rgba(88, 166, 255, 0.4);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 1rem;
+        background: var(--accent);
+        color: var(--bg);
+        padding: 0.6rem 1rem;
+        border-radius: 0 0 6px 6px;
+        font-size: 0.85rem;
+        text-decoration: none;
+        z-index: 200;
+        transition: top 0.2s;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      html {
+        font-size: 16px;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background: var(--bg);
+        color: var(--text-primary);
+        height: 100dvh;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.6;
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+        border-radius: 4px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .left,
+        .right {
+          animation: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .status-dot {
+          animation: none;
+        }
+      }
+
+      /* — Left half: primary content — */
+      .left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 3rem 3.5rem;
+        border-right: 1px solid var(--border);
+        opacity: 0;
+        animation: slide-up 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.1s forwards;
+      }
+
+      /* — Right half: metadata panel — */
+      .right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 3rem 3rem;
+        background: var(--bg-surface);
+        opacity: 0;
+        animation: slide-up 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.25s forwards;
+      }
+
+      @keyframes slide-up {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* — Status — */
+      .status {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 1.5rem;
+      }
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        background: var(--green);
+        border-radius: 50%;
+        box-shadow: 0 0 6px rgba(63, 185, 80, 0.4);
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(63, 185, 80, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 0 6px rgba(63, 185, 80, 0);
+        }
+      }
+
+      /* — Heading — */
+      h1 {
+        font-weight: 800;
+        font-size: clamp(2rem, 4.5vw, 3.2rem);
+        line-height: 1.05;
+        letter-spacing: -0.035em;
+        margin-bottom: 1.25rem;
+      }
+
+      /* — Bio — */
+      .bio {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        max-width: 480px;
+        line-height: 1.7;
+      }
+      .bio strong {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+      .content-link {
+        color: var(--accent);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(88, 166, 255, 0.25);
+        transition: border-color 0.3s;
+      }
+      .content-link:hover {
+        border-bottom-color: var(--accent);
+      }
+
+      /* — Right panel sections — */
+      .panel-label {
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--text-secondary);
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1.25rem;
+      }
+
+      /* — Education — */
+      .education {
+        margin-bottom: 2.5rem;
+      }
+      .uni {
+        font-family: var(--font-serif);
+        font-size: 1.2rem;
+        font-style: italic;
+        color: var(--text-primary);
+        margin-bottom: 0.2rem;
+      }
+      .education p {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+      .education a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+        transition:
+          color 0.3s,
+          border-color 0.3s;
+      }
+      .education a:hover {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+      }
+      .badge {
+        display: inline-block;
+        margin-top: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        background: var(--accent-dim);
+        color: var(--accent);
+        padding: 0.2rem 0.6rem;
+        border-radius: 3px;
+      }
+
+      /* — Links — */
+      .links-section {
+        margin-bottom: 0;
+      }
+      nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      nav a {
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-decoration: none;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        transition: all 0.25s;
+        border: 1px solid transparent;
+      }
+      nav a:hover {
+        background: rgba(88, 166, 255, 0.06);
+        color: var(--text-primary);
+        border-color: var(--border);
+      }
+      nav a .arrow {
+        font-size: 0.75rem;
+        opacity: 0;
+        transform: translateX(-4px);
+        transition: all 0.25s;
+      }
+      nav a:hover .arrow {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .wip {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        opacity: 0.35;
+        padding: 0.5rem 0.75rem;
+        font-style: italic;
+      }
+
+      /* — Responsive: stack on mobile — */
+      @media (max-width: 768px) {
+        body {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto;
+          overflow-y: auto;
+        }
+        .left {
+          padding: 2.5rem 1.5rem 2rem;
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+        }
+        .right {
+          padding: 2rem 1.5rem 2.5rem;
+        }
+        .desktop-separator,
+        .mobile-hidden {
+          display: none;
+        }
+        .education p {
+          display: flex;
+          flex-direction: column;
+          gap: 0.1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <main class="left" id="main-content" role="main">
+      <div
+        class="status"
+        role="status"
+        aria-label="Currently building at Cogniar"
+      >
+        <span class="status-dot" aria-hidden="true"></span>
+        Currently building at Cogniar
+      </div>
+      <header>
+        <h1>Gonzalo Zanelli</h1>
+      </header>
+      <section class="bio" aria-label="About">
+        <h2 class="sr-only">About Me</h2>
+        <p>
+          <strong>Software Engineer</strong> based in
+          <strong
+            ><a
+              href="https://www.google.com/search?q=buenos+aires"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="content-link"
+              >Buenos Aires</a
+            ></strong
+          >, specialized in building high-performance applications with Bun,
+          TypeScript, and Python. I design robust systems and automate complex
+          workflows using AI-driven strategies.
+        </p>
+      </section>
+    </main>
+
+    <aside class="right" aria-label="Details and links">
+      <section class="education" aria-label="Education">
+        <div class="panel-label">Education</div>
+        <h2 class="sr-only">Education</h2>
+        <div class="uni">Information Systems Engineering</div>
+        <p>
+          <span
+            ><a
+              href="https://utn.edu.ar/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Universidad Tecnológica Nacional
+              <span class="mobile-hidden">(UTN FRBA)</span></a
+            ></span
+          >
+          <span class="desktop-separator"> — </span>
+          <span>Currently Studying</span>
+        </p>
+        <span class="badge" aria-label="Currently studying">In Progress</span>
+      </section>
+
+      <section class="links-section" aria-label="Social links">
+        <div class="panel-label">Connect</div>
+        <h2 class="sr-only">Social Links</h2>
+        <nav aria-label="Social links">
+          <a
+            href="https://github.com/zanellig"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub <span class="arrow" aria-hidden="true">→</span></a
+          >
+          <a
+            href="https://linkedin.com/in/gzanelli"
+            target="_blank"
+            rel="noopener noreferrer"
+            >LinkedIn <span class="arrow" aria-hidden="true">→</span></a
+          >
+          <a href="mailto:gonzalozanelli1@gmail.com"
+            >Email <span class="arrow" aria-hidden="true">→</span></a
+          >
+          <span class="wip" aria-label="Portfolio, work in progress"
+            >Portfolio (WIP)</span
+          >
+        </nav>
+      </section>
+    </aside>
+  </body>
+</html>

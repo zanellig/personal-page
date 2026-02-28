@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gonzalo Zanelli — Software Engineer &amp; MLOps</title>
+    <meta
+      name="description"
+      content="Software Engineer based in Buenos Aires, Argentina. Focused on Bun, TypeScript, and AI-powered solutions."
+    />
+    <meta name="author" content="Gonzalo Zanelli" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0c0a1a" />
+    <link rel="canonical" href="https://zanelli.vercel.app/12" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Gonzalo Zanelli — Software Engineer &amp; MLOps"
+    />
+    <meta
+      property="og:description"
+      content="Personal site and portfolio of Gonzalo Zanelli, focused on software engineering and MLOps."
+    />
+    <meta property="og:url" content="https://zanelli.vercel.app/12" />
+    <meta property="og:image" content="https://zanelli.vercel.app/og.png" />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Gonzalo Zanelli",
+        "url": "https://zanelli.vercel.app/",
+        "jobTitle": "Software Engineer",
+        "worksFor": { "@type": "Organization", "name": "Cogniar" },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Universidad Tecnológica Nacional (UTN FRBA)"
+        },
+        "homeLocation": { "@type": "Place", "name": "Buenos Aires, Argentina" },
+        "knowsAbout": [
+          "Software Engineering",
+          "MLOps",
+          "TypeScript",
+          "Bun",
+          "Python",
+          "AI"
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Crimson+Pro:ital,wght@0,400;1,400&family=Fira+Code:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ——— Design: "Ultraviolet" — liquid gradients, glassmorphism, dark space ——— */
+      :root {
+        --violet: #7c3aed;
+        --violet-soft: #a78bfa;
+        --rose: #f43f5e;
+        --teal: #14b8a6;
+        --bg: #0c0a1a;
+        --bg-glass: rgba(255, 255, 255, 0.04);
+        --border-glass: rgba(255, 255, 255, 0.07);
+        --text-bright: #f5f3ff;
+        --text-muted: #a0a0be;
+        --gradient-hero: linear-gradient(
+          135deg,
+          #7c3aed 0%,
+          #ec4899 50%,
+          #f97316 100%
+        );
+        --font-sans: "Outfit", sans-serif;
+        --font-serif: "Crimson Pro", Georgia, serif;
+        --font-mono: "Fira Code", monospace;
+        --focus-ring: 0 0 0 3px rgba(124, 58, 237, 0.5);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 1rem;
+        background: var(--violet);
+        color: #fff;
+        padding: 0.6rem 1rem;
+        border-radius: 0 0 8px 8px;
+        font-size: 0.85rem;
+        text-decoration: none;
+        z-index: 200;
+        transition: top 0.2s;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      html {
+        font-size: 16px;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background: var(--bg);
+        color: var(--text-bright);
+        height: 100dvh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.6;
+        position: relative;
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+        border-radius: 6px;
+      }
+
+      /* — Animated mesh blobs — */
+      .mesh-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.2;
+        animation: drift 20s ease-in-out infinite;
+      }
+      .blob--1 {
+        width: 500px;
+        height: 500px;
+        background: var(--violet);
+        top: -15%;
+        left: -8%;
+      }
+      .blob--2 {
+        width: 400px;
+        height: 400px;
+        background: var(--rose);
+        bottom: -10%;
+        right: -10%;
+        animation-delay: -7s;
+        animation-duration: 25s;
+      }
+      .blob--3 {
+        width: 300px;
+        height: 300px;
+        background: var(--teal);
+        top: 50%;
+        left: 40%;
+        animation-delay: -13s;
+        animation-duration: 22s;
+      }
+
+      @keyframes drift {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        33% {
+          transform: translate(50px, -30px) scale(1.08);
+        }
+        66% {
+          transform: translate(-30px, 40px) scale(0.95);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .blob {
+          animation: none;
+        }
+        main {
+          animation: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .status-dot {
+          animation: none;
+        }
+      }
+
+      /* — Grain — */
+      .grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 100;
+        opacity: 0.025;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      /* — Content — */
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 600px;
+        width: 100%;
+        padding: 0 2rem;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(14px);
+        animation: reveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards;
+      }
+
+      @keyframes reveal {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* — Status — */
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--violet-soft);
+        background: rgba(124, 58, 237, 0.1);
+        border: 1px solid rgba(124, 58, 237, 0.18);
+        padding: 0.35rem 1rem;
+        border-radius: 3rem;
+        margin-bottom: 1.75rem;
+      }
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--teal);
+        border-radius: 50%;
+        animation: glow-pulse 2s infinite;
+      }
+      @keyframes glow-pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 5px rgba(20, 184, 166, 0);
+        }
+      }
+
+      /* — Name — */
+      h1 {
+        font-size: clamp(2.5rem, 7vw, 4.2rem);
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        margin-bottom: 1.25rem;
+      }
+      .gradient-text {
+        background: var(--gradient-hero);
+        background-size: 200% 200%;
+        animation: gradient-shift 6s ease infinite;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .gradient-text {
+          animation: none;
+          background-size: 100% 100%;
+        }
+      }
+
+      @keyframes gradient-shift {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      /* — Bio — */
+      .bio {
+        font-size: 1rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        max-width: 480px;
+        margin: 0 auto 1.5rem;
+      }
+      .bio strong {
+        color: var(--text-bright);
+        font-weight: 600;
+      }
+      .content-link {
+        color: var(--violet-soft);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(167, 139, 250, 0.3);
+        transition:
+          border-color 0.3s,
+          color 0.3s;
+      }
+      .content-link:hover {
+        color: var(--text-bright);
+        border-bottom-color: var(--text-bright);
+      }
+
+      /* — Education — */
+      .education {
+        background: var(--bg-glass);
+        border: 1px solid var(--border-glass);
+        border-radius: 1rem;
+        padding: 1.1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        backdrop-filter: blur(12px);
+        text-align: left;
+        transition:
+          background 0.4s,
+          border-color 0.4s;
+      }
+      .education:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(124, 58, 237, 0.15);
+      }
+      .uni {
+        font-family: var(--font-serif);
+        font-size: 1.15rem;
+        font-style: italic;
+        color: var(--text-bright);
+        margin-bottom: 0.15rem;
+      }
+      .education p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+      .education a {
+        color: var(--text-muted);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(160, 160, 190, 0.2);
+        transition:
+          color 0.3s,
+          border-color 0.3s;
+      }
+      .education a:hover {
+        color: var(--violet-soft);
+        border-bottom-color: var(--violet-soft);
+      }
+
+      /* — Nav — */
+      nav {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      nav a {
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-decoration: none;
+        color: var(--text-muted);
+        background: var(--bg-glass);
+        border: 1px solid var(--border-glass);
+        padding: 0.55rem 1.25rem;
+        border-radius: 3rem;
+        backdrop-filter: blur(8px);
+        transition: all 0.35s;
+        display: inline-block;
+      }
+      nav a:hover {
+        background: rgba(124, 58, 237, 0.12);
+        border-color: rgba(124, 58, 237, 0.25);
+        color: var(--text-bright);
+        transform: translateY(-1px);
+      }
+      nav a.primary {
+        background: var(--gradient-hero);
+        background-size: 200% 200%;
+        animation: gradient-shift 6s ease infinite;
+        color: #fff;
+        border-color: transparent;
+        font-weight: 600;
+      }
+      nav a.primary:hover {
+        transform: scale(1.04) translateY(-1px);
+        box-shadow: 0 6px 24px rgba(124, 58, 237, 0.35);
+      }
+      .wip {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        padding: 0.55rem 0;
+        font-style: italic;
+      }
+
+      /* — Responsive — */
+      @media (max-width: 640px) {
+        main {
+          padding: 0 1.5rem;
+        }
+        h1 {
+          font-size: clamp(2rem, 10vw, 3rem);
+        }
+        .bio {
+          font-size: 0.92rem;
+        }
+        nav {
+          flex-direction: column;
+          align-items: center;
+        }
+        nav a {
+          width: 100%;
+          text-align: center;
+        }
+        .desktop-separator,
+        .mobile-hidden {
+          display: none;
+        }
+        .education p {
+          display: flex;
+          flex-direction: column;
+          gap: 0.1rem;
+        }
+        .education {
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="mesh-bg" aria-hidden="true">
+      <div class="blob blob--1"></div>
+      <div class="blob blob--2"></div>
+      <div class="blob blob--3"></div>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <main id="main-content" role="main">
+      <div
+        class="status"
+        role="status"
+        aria-label="Currently building at Cogniar"
+      >
+        <span class="status-dot" aria-hidden="true"></span>
+        Currently building at Cogniar
+      </div>
+
+      <header>
+        <h1><span class="gradient-text">Gonzalo Zanelli</span></h1>
+      </header>
+
+      <section class="bio" aria-label="About">
+        <h2 class="sr-only">About Me</h2>
+        <p>
+          <strong>Software Engineer</strong> based in
+          <strong
+            ><a
+              href="https://www.google.com/search?q=buenos+aires"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="content-link"
+              >Buenos Aires</a
+            ></strong
+          >, specialized in building high-performance applications with Bun,
+          TypeScript, and Python. I design robust systems and automate complex
+          workflows using AI-driven strategies.
+        </p>
+      </section>
+
+      <section class="education" aria-label="Education">
+        <h2 class="sr-only">Education</h2>
+        <div class="uni">Information Systems Engineering</div>
+        <p>
+          <span
+            ><a
+              href="https://utn.edu.ar/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Universidad Tecnológica Nacional
+              <span class="mobile-hidden">(UTN FRBA)</span></a
+            ></span
+          >
+          <span class="desktop-separator"> — </span>
+          <span>Currently Studying</span>
+        </p>
+      </section>
+
+      <nav aria-label="Social links">
+        <h2 class="sr-only">Social Links</h2>
+        <a
+          href="https://github.com/zanellig"
+          class="primary"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        >
+        <a
+          href="https://linkedin.com/in/gzanelli"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+        <a href="mailto:gonzalozanelli1@gmail.com">Email</a>
+        <span class="wip" aria-label="Portfolio, work in progress"
+          >Portfolio (WIP)</span
+        >
+      </nav>
+    </main>
+  </body>
+</html>

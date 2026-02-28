@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gonzalo Zanelli — Software Engineer &amp; MLOps</title>
+    <meta
+      name="description"
+      content="Software Engineer based in Buenos Aires, Argentina. Focused on Bun, TypeScript, and AI-powered solutions."
+    />
+    <meta name="author" content="Gonzalo Zanelli" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#f5efe6" />
+    <link rel="canonical" href="https://zanelli.vercel.app/9" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Gonzalo Zanelli — Software Engineer &amp; MLOps"
+    />
+    <meta
+      property="og:description"
+      content="Personal site and portfolio of Gonzalo Zanelli, focused on software engineering and MLOps."
+    />
+    <meta property="og:url" content="https://zanelli.vercel.app/9" />
+    <meta property="og:image" content="https://zanelli.vercel.app/og.png" />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Gonzalo Zanelli",
+        "url": "https://zanelli.vercel.app/",
+        "jobTitle": "Software Engineer",
+        "worksFor": { "@type": "Organization", "name": "Cogniar" },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Universidad Tecnológica Nacional (UTN FRBA)"
+        },
+        "homeLocation": { "@type": "Place", "name": "Buenos Aires, Argentina" },
+        "knowsAbout": [
+          "Software Engineering",
+          "MLOps",
+          "TypeScript",
+          "Bun",
+          "Python",
+          "AI"
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ——— Design: "Térmica" — warm analog, amber/sepia, film grain ——— */
+      :root {
+        --amber: #b8854e;
+        --amber-deep: #8d6030;
+        --cream: #f5efe6;
+        --cream-dark: #e8dfd3;
+        --espresso: #2c1e14;
+        --espresso-mid: #5a3d28;
+        --text-muted: #7a6555;
+        --font-sans: "DM Sans", sans-serif;
+        --font-serif: "Libre Baskerville", Georgia, serif;
+        --font-mono: "IBM Plex Mono", monospace;
+        --focus-ring: 0 0 0 3px rgba(184, 133, 78, 0.5);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* — Skip link (WCAG) — */
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 1rem;
+        background: var(--espresso);
+        color: var(--cream);
+        padding: 0.75rem 1.25rem;
+        border-radius: 0 0 0.5rem 0.5rem;
+        z-index: 200;
+        font-size: 0.85rem;
+        text-decoration: none;
+        transition: top 0.2s;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      html {
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background: var(--cream);
+        color: var(--espresso);
+        height: 100dvh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.6;
+      }
+
+      /* — Film grain — */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 100;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      /* — Warm radial glow — */
+      body::before {
+        content: "";
+        position: fixed;
+        top: -20%;
+        right: -10%;
+        width: 60%;
+        height: 80%;
+        background: radial-gradient(
+          ellipse,
+          rgba(184, 133, 78, 0.1) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* — Focus styles (WCAG) — */
+      a:focus-visible,
+      button:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+        border-radius: 4px;
+      }
+
+      /* — Main layout — */
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 680px;
+        width: 100%;
+        padding: 0 2.5rem;
+        opacity: 0;
+        transform: translateY(16px);
+        animation: reveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.15s forwards;
+      }
+
+      @keyframes reveal {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        main {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+        .status::before {
+          animation: none;
+        }
+      }
+
+      /* — Status line — */
+      .status {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        margin-bottom: 1rem;
+      }
+      .status::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        background: var(--amber);
+        border-radius: 50%;
+        flex-shrink: 0;
+        box-shadow: 0 0 0 3px rgba(184, 133, 78, 0.12);
+        animation: pulse-warm 2.5s ease-in-out infinite;
+      }
+      @keyframes pulse-warm {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(184, 133, 78, 0.25);
+        }
+        50% {
+          box-shadow: 0 0 0 7px rgba(184, 133, 78, 0);
+        }
+      }
+
+      /* — Name — */
+      h1 {
+        font-family: var(--font-serif);
+        font-weight: 700;
+        font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+        line-height: 1.05;
+        letter-spacing: -0.025em;
+        margin-bottom: 1.25rem;
+        color: var(--espresso);
+      }
+
+      /* — Bio — */
+      .bio {
+        font-size: 1.05rem;
+        color: var(--text-muted);
+        max-width: 520px;
+        line-height: 1.65;
+        margin-bottom: 1.5rem;
+      }
+      .bio strong {
+        color: var(--espresso);
+        font-weight: 500;
+      }
+      .bio a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(122, 101, 85, 0.3);
+        transition: border-color 0.3s;
+      }
+      .bio a:hover {
+        border-bottom-color: var(--espresso);
+      }
+
+      /* — Education — */
+      .education {
+        background: rgba(184, 133, 78, 0.07);
+        border-left: 2px solid var(--amber);
+        padding: 1.1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: background 0.4s;
+      }
+      .education:hover {
+        background: rgba(184, 133, 78, 0.11);
+      }
+      .uni {
+        font-family: var(--font-serif);
+        font-size: 1.2rem;
+        font-style: italic;
+        color: var(--espresso);
+        margin-bottom: 0.15rem;
+      }
+      .education p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+      .education a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(122, 101, 85, 0.25);
+        transition: border-color 0.3s;
+      }
+      .education a:hover {
+        border-bottom-color: var(--espresso);
+      }
+
+      /* — Nav / Links — */
+      nav {
+        display: flex;
+        gap: 1.75rem;
+        flex-wrap: wrap;
+      }
+      nav a,
+      .wip {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        font-weight: 500;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--espresso-mid);
+        position: relative;
+        transition: color 0.3s;
+        display: inline-block;
+        padding: 0.2rem 0;
+      }
+      nav a:hover {
+        color: var(--espresso);
+      }
+      nav a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: var(--amber);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      nav a:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+      .wip {
+        opacity: 0.4;
+        cursor: default;
+        font-style: italic;
+      }
+
+      /* — Responsive — */
+      @media (max-width: 640px) {
+        main {
+          padding: 0 1.5rem;
+        }
+        h1 {
+          font-size: clamp(1.8rem, 8vw, 2.5rem);
+        }
+        .bio {
+          font-size: 0.95rem;
+        }
+        nav {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        nav a {
+          padding-bottom: 0.4rem;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+          width: 100%;
+        }
+        nav a::after {
+          display: none;
+        }
+        .desktop-separator,
+        .mobile-hidden {
+          display: none;
+        }
+        .education p {
+          display: flex;
+          flex-direction: column;
+          gap: 0.15rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <main id="main-content" role="main">
+      <div class="title-group">
+        <div
+          class="status"
+          role="status"
+          aria-label="Currently building at Cogniar"
+        >
+          Currently building at Cogniar
+        </div>
+        <header>
+          <h1>Gonzalo Zanelli</h1>
+        </header>
+      </div>
+
+      <section class="bio" aria-label="About">
+        <h2 class="sr-only">About Me</h2>
+        <p>
+          <strong>Software Engineer</strong> based in
+          <strong
+            ><a
+              href="https://www.google.com/search?q=buenos+aires"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Buenos Aires</a
+            ></strong
+          >, specialized in building high-performance applications with Bun,
+          TypeScript, and Python. I design robust systems and automate complex
+          workflows using AI-driven strategies.
+        </p>
+      </section>
+
+      <section class="education" aria-label="Education">
+        <h2 class="sr-only">Education</h2>
+        <div class="uni">Information Systems Engineering</div>
+        <p>
+          <span
+            ><a
+              href="https://utn.edu.ar/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Universidad Tecnológica Nacional
+              <span class="mobile-hidden">(UTN FRBA)</span></a
+            ></span
+          >
+          <span class="desktop-separator"> — </span>
+          <span>Currently Studying</span>
+        </p>
+      </section>
+
+      <nav aria-label="Social links">
+        <h2 class="sr-only">Social Links</h2>
+        <a
+          href="https://github.com/zanellig"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        >
+        <a
+          href="https://linkedin.com/in/gzanelli"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+        <a href="mailto:gonzalozanelli1@gmail.com">Email</a>
+        <span class="wip" aria-label="Portfolio, work in progress"
+          >Portfolio (WIP)</span
+        >
+      </nav>
+    </main>
+  </body>
+</html>

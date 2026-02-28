@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gonzalo Zanelli — Software Engineer &amp; MLOps</title>
+    <meta
+      name="description"
+      content="Software Engineer based in Buenos Aires, Argentina. Focused on Bun, TypeScript, and AI-powered solutions."
+    />
+    <meta name="author" content="Gonzalo Zanelli" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="canonical" href="https://zanelli.vercel.app/11" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Gonzalo Zanelli — Software Engineer &amp; MLOps"
+    />
+    <meta
+      property="og:description"
+      content="Personal site and portfolio of Gonzalo Zanelli, focused on software engineering and MLOps."
+    />
+    <meta property="og:url" content="https://zanelli.vercel.app/11" />
+    <meta property="og:image" content="https://zanelli.vercel.app/og.png" />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Gonzalo Zanelli",
+        "url": "https://zanelli.vercel.app/",
+        "jobTitle": "Software Engineer",
+        "worksFor": { "@type": "Organization", "name": "Cogniar" },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Universidad Tecnológica Nacional (UTN FRBA)"
+        },
+        "homeLocation": { "@type": "Place", "name": "Buenos Aires, Argentina" },
+        "knowsAbout": [
+          "Software Engineering",
+          "MLOps",
+          "TypeScript",
+          "Bun",
+          "Python",
+          "AI"
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ——— Design: "Circuitboard" — green-on-black CRT terminal ——— */
+      :root {
+        --green: #33ff33;
+        --green-dim: #1a9e1a;
+        --green-glow: rgba(51, 255, 51, 0.12);
+        --amber: #ffb833;
+        --bg: #0a0a0a;
+        --bg-panel: #0f0f0f;
+        --border: #1a2a1a;
+        --text: #b0ffb0;
+        --text-dim: #4a7a4a;
+        --font-crt: "VT323", monospace;
+        --font-mono: "Share Tech Mono", monospace;
+        --focus-ring: 0 0 0 2px var(--green);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 1rem;
+        background: var(--green);
+        color: var(--bg);
+        padding: 0.5rem 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        text-decoration: none;
+        z-index: 200;
+        transition: top 0.2s;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      html {
+        font-size: 16px;
+      }
+
+      body {
+        font-family: var(--font-mono);
+        background: var(--bg);
+        color: var(--text);
+        height: 100dvh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-font-smoothing: none;
+      }
+
+      /* — Scanlines — */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 50;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.06) 2px,
+          rgba(0, 0, 0, 0.06) 4px
+        );
+      }
+      /* — CRT vignette — */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 51;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 55%,
+          rgba(0, 0, 0, 0.55) 100%
+        );
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        main {
+          animation: none !important;
+          opacity: 1 !important;
+        }
+        .cursor-block,
+        .status-dot {
+          animation: none;
+        }
+      }
+
+      /* — Main container — */
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 640px;
+        width: 100%;
+        padding: 0 2rem;
+        opacity: 0;
+        animation: boot 0.6s steps(3) 0.2s forwards;
+      }
+
+      @keyframes boot {
+        0% {
+          opacity: 0;
+        }
+        33% {
+          opacity: 0.4;
+        }
+        66% {
+          opacity: 0.8;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* — Prompt / Status — */
+      .prompt {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .prompt .cmd {
+        color: var(--green);
+      }
+      .cursor-block {
+        display: inline-block;
+        width: 7px;
+        height: 13px;
+        background: var(--green);
+        animation: crt-blink 1s step-end infinite;
+        vertical-align: middle;
+      }
+      @keyframes crt-blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* — Name — */
+      h1 {
+        font-family: var(--font-crt);
+        font-size: clamp(2.8rem, 8vw, 4.5rem);
+        font-weight: 400;
+        line-height: 0.95;
+        color: var(--green);
+        text-shadow:
+          0 0 15px var(--green-glow),
+          0 0 40px rgba(51, 255, 51, 0.04);
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.02em;
+      }
+
+      /* — Role line — */
+      .role {
+        font-size: 0.9rem;
+        color: var(--text);
+        margin-bottom: 0.25rem;
+      }
+      .role .hl {
+        color: var(--amber);
+      }
+
+      /* — Status bar — */
+      .status-bar {
+        font-size: 0.75rem;
+        color: var(--text-dim);
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--green);
+        box-shadow: 0 0 6px var(--green);
+        display: inline-block;
+        animation: crt-blink 2.5s infinite;
+      }
+
+      /* — Bio — */
+      .bio {
+        font-size: 0.85rem;
+        color: var(--text-dim);
+        line-height: 1.65;
+        max-width: 540px;
+        margin-bottom: 1.25rem;
+        border-left: 2px solid var(--green-dim);
+        padding-left: 1rem;
+      }
+      .bio strong {
+        color: var(--text);
+        font-weight: 400;
+      }
+      .content-link {
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px dashed var(--text-dim);
+        transition: color 0.2s;
+      }
+      .content-link:hover {
+        color: var(--green);
+      }
+
+      /* — Education — */
+      .education {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.25rem;
+        position: relative;
+      }
+      .edu-label {
+        position: absolute;
+        top: -0.55rem;
+        left: 0.75rem;
+        background: var(--bg-panel);
+        padding: 0 0.5rem;
+        font-size: 0.65rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      .uni {
+        font-family: var(--font-crt);
+        font-size: 1.3rem;
+        color: var(--green);
+        margin-bottom: 0.15rem;
+      }
+      .education p {
+        font-size: 0.78rem;
+        color: var(--text-dim);
+      }
+      .education a {
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px dashed var(--text-dim);
+        transition: color 0.2s;
+      }
+      .education a:hover {
+        color: var(--green);
+      }
+      .edu-badge {
+        display: inline-block;
+        margin-top: 0.4rem;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        background: rgba(255, 184, 51, 0.15);
+        color: var(--amber);
+        padding: 0.1rem 0.5rem;
+      }
+
+      /* — Nav — */
+      nav {
+        display: flex;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+      }
+      nav a {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        text-decoration: none;
+        color: var(--green);
+        border: 1px solid var(--border);
+        padding: 0.45rem 1rem;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      nav a:hover {
+        background: var(--green);
+        color: var(--bg);
+        border-color: var(--green);
+        text-shadow: none;
+        box-shadow: 0 0 12px var(--green-glow);
+      }
+      .wip {
+        font-size: 0.78rem;
+        color: var(--text-dim);
+        opacity: 0.35;
+        padding: 0.45rem 0;
+        font-style: italic;
+      }
+
+      /* — Responsive — */
+      @media (max-width: 640px) {
+        main {
+          padding: 0 1rem;
+        }
+        h1 {
+          font-size: clamp(2rem, 10vw, 3rem);
+        }
+        nav {
+          flex-direction: column;
+        }
+        nav a {
+          text-align: center;
+          justify-content: center;
+        }
+        .desktop-separator,
+        .mobile-hidden {
+          display: none;
+        }
+        .education p {
+          display: flex;
+          flex-direction: column;
+          gap: 0.1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <main id="main-content" role="main">
+      <div class="prompt" aria-hidden="true">
+        <span class="cursor-block"></span>
+        <span><span class="cmd">$</span> cat whoami.txt</span>
+      </div>
+
+      <header>
+        <h1>Gonzalo<br />Zanelli</h1>
+      </header>
+
+      <div class="role" aria-label="Software Engineer and MLOps">
+        <span class="hl">SOFTWARE ENGINEER</span> &amp;
+        <span class="hl">MLOPS</span>
+      </div>
+
+      <div
+        class="status-bar"
+        role="status"
+        aria-label="Currently building at Cogniar"
+      >
+        <span class="status-dot" aria-hidden="true"></span>
+        Currently building at Cogniar &mdash; Buenos Aires
+      </div>
+
+      <section class="bio" aria-label="About">
+        <h2 class="sr-only">About Me</h2>
+        <p>
+          <strong>Software Engineer</strong> based in
+          <strong
+            ><a
+              href="https://www.google.com/search?q=buenos+aires"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="content-link"
+              >Buenos Aires</a
+            ></strong
+          >, specialized in building high-performance applications with Bun,
+          TypeScript, and Python. I design robust systems and automate complex
+          workflows using AI-driven strategies.
+        </p>
+      </section>
+
+      <section class="education" aria-label="Education">
+        <span class="edu-label" aria-hidden="true">// education</span>
+        <h2 class="sr-only">Education</h2>
+        <div class="uni">Information Systems Engineering</div>
+        <p>
+          <span
+            ><a
+              href="https://utn.edu.ar/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Universidad Tecnológica Nacional
+              <span class="mobile-hidden">(UTN FRBA)</span></a
+            ></span
+          >
+          <span class="desktop-separator"> — </span>
+          <span>Currently Studying</span>
+        </p>
+        <span class="edu-badge" aria-label="Currently studying"
+          >IN_PROGRESS</span
+        >
+      </section>
+
+      <nav aria-label="Social links">
+        <h2 class="sr-only">Social Links</h2>
+        <a
+          href="https://github.com/zanellig"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><span aria-hidden="true">&gt;</span> GitHub</a
+        >
+        <a
+          href="https://linkedin.com/in/gzanelli"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><span aria-hidden="true">&gt;</span> LinkedIn</a
+        >
+        <a href="mailto:gonzalozanelli1@gmail.com"
+          ><span aria-hidden="true">&gt;</span> Email</a
+        >
+        <span class="wip" aria-label="Portfolio, work in progress"
+          >Portfolio (WIP)</span
+        >
+      </nav>
+    </main>
+  </body>
+</html>
