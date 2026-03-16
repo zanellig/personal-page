@@ -57,15 +57,23 @@ const OG_HEIGHT = 630;
 async function loadFonts() {
 	if (fontsCache) return fontsCache;
 
+	// Look for fonts next to the api entry point (works on Vercel)
+	// Falls back to public/fonts for local dev
+	const apiDir = join(import.meta.dir, "api/fonts");
+	const publicDir = join(import.meta.dir, "public/fonts");
+
+	const fontsDir = (await Bun.file(
+		join(apiDir, "instrument-serif-v5-latin-regular.woff2"),
+	).exists())
+		? apiDir
+		: publicDir;
+
 	const [serifFontData, sansFontData] = await Promise.all([
 		Bun.file(
-			join(
-				import.meta.dir,
-				"public/fonts/instrument-serif-v5-latin-regular.woff2",
-			),
+			join(fontsDir, "instrument-serif-v5-latin-regular.woff2"),
 		).arrayBuffer(),
 		Bun.file(
-			join(import.meta.dir, "public/fonts/instrument-sans-v4-latin-500.woff2"),
+			join(fontsDir, "instrument-sans-v4-latin-500.woff2"),
 		).arrayBuffer(),
 	]);
 
