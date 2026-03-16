@@ -57,40 +57,16 @@ const OG_HEIGHT = 630;
 async function loadFonts() {
 	if (fontsCache) return fontsCache;
 
-	// Fetch fonts from Google Fonts CSS API to get the actual font URLs
-	const serifCssResponse = await fetch(
-		"https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap",
-		{
-			headers: {
-				"User-Agent":
-					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-			},
-		},
-	);
-	const sansCssResponse = await fetch(
-		"https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500&display=swap",
-		{
-			headers: {
-				"User-Agent":
-					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-			},
-		},
-	);
-
-	const serifCss = await serifCssResponse.text();
-	const sansCss = await sansCssResponse.text();
-
-	// Extract font URLs from CSS
-	const serifUrlMatch = serifCss.match(/src:\s*url\(([^)]+)\)/);
-	const sansUrlMatch = sansCss.match(/src:\s*url\(([^)]+)\)/);
-
-	if (!serifUrlMatch || !sansUrlMatch) {
-		throw new Error("Could not extract font URLs from Google Fonts CSS");
-	}
-
 	const [serifFontData, sansFontData] = await Promise.all([
-		fetch(serifUrlMatch[1]!).then((r) => r.arrayBuffer()),
-		fetch(sansUrlMatch[1]!).then((r) => r.arrayBuffer()),
+		Bun.file(
+			join(
+				import.meta.dir,
+				"public/fonts/instrument-serif-v5-latin-regular.woff2",
+			),
+		).arrayBuffer(),
+		Bun.file(
+			join(import.meta.dir, "public/fonts/instrument-sans-v4-latin-500.woff2"),
+		).arrayBuffer(),
 	]);
 
 	fontsCache = [
@@ -268,7 +244,8 @@ app.use("*", async (c, next) => {
 		} else if (
 			path.endsWith(".css") ||
 			path.endsWith(".ico") ||
-			path.endsWith(".svg")
+			path.endsWith(".svg") ||
+			path.endsWith(".woff2")
 		) {
 			c.header("Cache-Control", "public, max-age=86400");
 		}
