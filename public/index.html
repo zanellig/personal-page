@@ -10,6 +10,7 @@
     <meta name="keywords" content="Gonzalo Zanelli, software engineer, mlops, full stack, bun, typescript, ai, python" />
     <meta name="theme-color" content="#fafafa">
     <link rel="canonical" href="https://zanelli.vercel.app/">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -17,6 +18,8 @@
     <meta property="og:description" content="Personal site and portfolio of Gonzalo Zanelli, focused on software engineering and MLOps." />
     <meta property="og:url" content="https://zanelli.vercel.app/" />
     <meta property="og:image" content="https://zanelli.vercel.app/og.png" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Gonzalo Zanelli" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
@@ -58,7 +61,7 @@
     <!-- Async load Google Fonts to prevent render blocking -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap"></noscript>
-    <link rel="stylesheet" href="index.css">
+    <link rel="preload" href="index.css" as="style">
 </head>
 <body>
     <main class="container">
@@ -73,7 +76,7 @@
         <section class="bio">
             <h2 class="sr-only">About Me</h2>
             <p>
-                <strong>Software Engineer</strong> based in <strong><a href="https://www.google.com/search?q=buenos+aires" target="_blank" rel="noopener noreferrer" class="content-link">Buenos Aires</a></strong>, specialized in building high-performance
+                <strong>Software Engineer</strong> based in <strong><a href="https://en.wikipedia.org/wiki/Buenos_Aires" target="_blank" rel="noopener noreferrer" class="content-link">Buenos Aires</a></strong>, specialized in building high-performance
                 applications with Bun, TypeScript, and Python. I design robust systems
                 and automate complex workflows using AI-driven strategies.
             </p>
