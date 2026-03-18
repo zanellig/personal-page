@@ -78,6 +78,14 @@
     <link rel="preload" href="/fonts/instrument-sans-v4-latin-500.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="index.css" as="style">
     <link rel="stylesheet" href="index.css">
+
+    <!-- Cal element-click embed code begins -->
+    <script type="text/javascript">
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+      Cal("init", "meeting", {origin:"https://app.cal.com"});
+      Cal.ns.meeting("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+    </script>
+    <!-- Cal element-click embed code ends -->
 </head>
 <body>
     <main class="container">
@@ -108,12 +116,24 @@
             </p>
         </section>
 
+        <section class="cta">
+            <h2 class="cta-title">Want to leverage software and AI to scale your business?</h2>
+            <button
+                type="button"
+                class="cta-button"
+                data-cal-link="gonzalozanelli/meeting"
+                data-cal-namespace="meeting"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+            >
+                Let's have a chat
+            </button>
+        </section>
+
         <nav>
             <h2 class="sr-only">Social Links</h2>
             <a href="https://github.com/zanellig" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://linkedin.com/in/gzanelli" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="mailto:gonzalozanelli1@gmail.com">Email</a>
-            <span class="wip">Portfolio (WIP)</span>
         </nav>
     </main>
 </body>

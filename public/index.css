@@ -229,6 +229,38 @@ nav a:hover::after {
 	transform-origin: left;
 }
 
+.cta {
+	margin-bottom: 2.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.cta-title {
+	font-size: 1.1rem;
+	color: var(--text-secondary);
+	font-weight: 400;
+	max-width: 500px;
+	line-height: 1.4;
+}
+
+.cta-button {
+	width: fit-content;
+	background: var(--text-primary);
+	color: var(--bg-color);
+	padding: 0.5rem 1.2rem;
+	font-family: var(--font-serif);
+	font-size: 1.2rem;
+	cursor: pointer;
+	transition: var(--transition-smooth);
+	border: 1px solid var(--text-primary);
+}
+
+.cta-button:hover {
+	background: transparent;
+	color: var(--text-primary);
+}
+
 /* --- Responsive Design (Tailwind-inspired breakpoints) --- */
 
 /* Small (sm): 640px and up */
@@ -289,6 +321,14 @@ nav a:hover::after {
 	.bio {
 		font-size: 1.05rem;
 		line-height: 1.5;
+	}
+
+	.cta {
+		margin-bottom: 2rem;
+	}
+
+	.cta-title {
+		font-size: 1.05rem;
 	}
 
 	.education {
