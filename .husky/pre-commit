@@ -1,0 +1,15 @@
+#!/bin/sh
+CSS_INPUT="public/index.css"
+CSS_OUTPUT="output.css"
+
+if git diff --cached --name-only | grep -q "$CSS_INPUT"; then
+  echo "⚙ Minifying CSS..."
+  bun run esbuild "$CSS_INPUT" --minify --outfile="$CSS_OUTPUT"
+
+  if [ $? -ne 0 ]; then
+    echo "✗ Minification failed."
+    exit 1
+  fi
+
+  git add "$CSS_OUTPUT"
+fi
