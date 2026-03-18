@@ -1,6 +1,8 @@
 #!/bin/sh
 CSS_INPUT="public/index.css"
-CSS_OUTPUT="output.css"
+CSS_OUTPUT="public/output.css"
+
+export PATH="$HOME/.bun/bin:$PATH"
 
 if git diff --cached --name-only | grep -q "$CSS_INPUT"; then
   echo "⚙ Minifying CSS..."
