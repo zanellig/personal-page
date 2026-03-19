@@ -1,13 +1,17 @@
+import { readFile } from "node:fs/promises";
+import { dirname, join, sep } from "node:path";
+import { fileURLToPath } from "node:url";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { Resvg } from "@resvg/resvg-js";
 import { Hono } from "hono";
 import { secureHeaders } from "hono/secure-headers";
-import { join, sep } from "path";
 import satori, { type Font } from "satori";
 
 const app = new Hono();
 
-const PUBLIC_DIR = join(import.meta.dir, "public");
+const APP_DIR = dirname(fileURLToPath(import.meta.url));
+const PUBLIC_DIR = join(APP_DIR, "public");
+const FONTS_DIR = join(PUBLIC_DIR, "fonts");
 const MAX_URI_LENGTH = 2048;
 
 // in-memory cache for OG image
@@ -57,29 +61,27 @@ const OG_HEIGHT = 630;
 async function loadFonts() {
 	if (fontsCache) return fontsCache;
 
-	const baseUrl = process.env.VERCEL_URL
-		? `https://${process.env.VERCEL_URL}/fonts`
-		: "http://localhost:3000/fonts"; // fallback for local dev
-
 	const [serifFontData, sansFontData] = await Promise.all([
-		fetch(`${baseUrl}/instrument-serif-v5-latin-regular.woff2`).then((r) =>
-			r.arrayBuffer(),
-		),
-		fetch(`${baseUrl}/instrument-sans-v4-latin-500.woff2`).then((r) =>
-			r.arrayBuffer(),
-		),
+		readFile(join(FONTS_DIR, "instrument-serif-v5-latin-regular.ttf")),
+		readFile(join(FONTS_DIR, "instrument-sans-v4-latin-500.ttf")),
 	]);
 
 	fontsCache = [
 		{
 			name: "Instrument Serif",
-			data: serifFontData,
+			data: serifFontData.buffer.slice(
+				serifFontData.byteOffset,
+				serifFontData.byteOffset + serifFontData.byteLength,
+			),
 			weight: 400 as const,
 			style: "normal",
 		},
 		{
 			name: "Instrument Sans",
-			data: sansFontData,
+			data: sansFontData.buffer.slice(
+				sansFontData.byteOffset,
+				sansFontData.byteOffset + sansFontData.byteLength,
+			),
 			weight: 500 as const,
 			style: "normal",
 		},
