@@ -5,13 +5,13 @@ CSS_OUTPUT="public/output.css"
 export PATH="$HOME/.bun/bin:$PATH"
 
 if git diff --cached --name-only | grep -q "$CSS_INPUT"; then
-  echo "⚙ Minifying CSS..."
+  echo "Minifying CSS..."
   bun run esbuild "$CSS_INPUT" --minify --outfile="$CSS_OUTPUT"
 
-  if [ $? -ne 0 ]; then
-    echo "✗ Minification failed."
-    exit 1
-  fi
+	if [ $? -ne 0 ]; then
+		echo "\033[31mMinification failed.\033[0m"
+		exit 1
+	fi
 
   git add "$CSS_OUTPUT"
 fi
