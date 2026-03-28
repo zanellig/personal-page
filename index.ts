@@ -14,6 +14,10 @@ const PUBLIC_DIR = join(APP_DIR, "public");
 const FONTS_DIR = join(PUBLIC_DIR, "fonts");
 const MAX_URI_LENGTH = 2048;
 
+/* 
+	These caches, when deployed on serverless-based hosts like Vercel, work only for warm insance hits.
+	We could use a CDN for this, but for now this is good enough.
+*/
 // in-memory cache for OG image
 let ogImageCache: Uint8Array | null = null;
 // in-memory cache for sitemap
@@ -61,7 +65,10 @@ const OG_HEIGHT = 630;
 async function loadFonts() {
 	if (fontsCache) return fontsCache;
 
-	const [serifFontData, sansFontData] = await Promise.all([
+	// Load local TTF fonts for OG image generation
+	// Note: Using Instrument Serif for headings since FunnelDisplay is a variable font
+	// and Satori's OpenType parser doesn't handle variable fonts well
+	const [headingsFontData, sansFontData] = await Promise.all([
 		readFile(join(FONTS_DIR, "instrument-serif-v5-latin-regular.ttf")),
 		readFile(join(FONTS_DIR, "instrument-sans-v4-latin-500.ttf")),
 	]);
@@ -69,9 +76,9 @@ async function loadFonts() {
 	fontsCache = [
 		{
 			name: "Instrument Serif",
-			data: serifFontData.buffer.slice(
-				serifFontData.byteOffset,
-				serifFontData.byteOffset + serifFontData.byteLength,
+			data: headingsFontData.buffer.slice(
+				headingsFontData.byteOffset,
+				headingsFontData.byteOffset + headingsFontData.byteLength,
 			),
 			weight: 400 as const,
 			style: "normal",
