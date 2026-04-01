@@ -1,39 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gonzalo Zanelli — Software Engineer & MLOps</title>
-    <meta name="description" content="Software Engineer based in Buenos Aires, Argentina. Focused on Bun, TypeScript, and AI-powered solutions.">
-    <meta name="author" content="Gonzalo Zanelli" />
-    <meta name="robots" content="index, follow" />
-    <meta name="keywords" content="Gonzalo Zanelli, software engineer, mlops, full stack, bun, typescript, ai, python" />
-    <meta name="theme-color" content="#fafafa">
-    <link rel="canonical" href="https://zanelli.vercel.app/">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Gonzalo Zanelli — Software Engineer & MLOps</title>
+		<meta
+			name="description"
+			content="Software Engineer based in Buenos Aires, Argentina. Focused on Bun, TypeScript, and AI-powered solutions."
+		>
+		<meta name="author" content="Gonzalo Zanelli">
+		<meta name="robots" content="index, follow">
+		<meta
+			name="keywords"
+			content="Gonzalo Zanelli, software engineer, mlops, full stack, bun, typescript, ai, python"
+		>
+		<meta name="theme-color" content="#fafafa">
+		<link rel="canonical" href="https://zanelli.vercel.app/">
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <meta name="google-site-verification" content="6Y1U1yyWvsfoKrpuUIKWDC9A8fW0p1E4WkmjwH2SNxM" />
+		<meta
+			name="google-site-verification"
+			content="6Y1U1yyWvsfoKrpuUIKWDC9A8fW0p1E4WkmjwH2SNxM"
+		>
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Gonzalo Zanelli — Software Engineer & MLOps" />
-    <meta property="og:description" content="Personal site and portfolio of Gonzalo Zanelli, focused on software engineering and MLOps." />
-    <meta property="og:url" content="https://zanelli.vercel.app/" />
-    <meta property="og:image" content="https://zanelli.vercel.app/og.png" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:site_name" content="Gonzalo Zanelli" />
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website">
+		<meta
+			property="og:title"
+			content="Gonzalo Zanelli — Software Engineer & MLOps"
+		>
+		<meta
+			property="og:description"
+			content="Personal site and portfolio of Gonzalo Zanelli, focused on software engineering and MLOps."
+		>
+		<meta property="og:url" content="https://zanelli.vercel.app/">
+		<meta property="og:image" content="https://zanelli.vercel.app/og.png">
+		<meta property="og:image:type" content="image/png">
+		<meta property="og:image:width" content="1200">
+		<meta property="og:image:height" content="630">
+		<meta property="og:locale" content="en_US">
+		<meta property="og:site_name" content="Gonzalo Zanelli">
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Gonzalo Zanelli — Software Engineer & MLOps">
-    <meta name="twitter:description" content="Personal site and portfolio of Gonzalo Zanelli, focused on software engineering and MLOps.">
-    <meta name="twitter:image" content="https://zanelli.vercel.app/og.png">
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta
+			name="twitter:title"
+			content="Gonzalo Zanelli — Software Engineer & MLOps"
+		>
+		<meta
+			name="twitter:description"
+			content="Personal site and portfolio of Gonzalo Zanelli, focused on software engineering and MLOps."
+		>
+		<meta name="twitter:image" content="https://zanelli.vercel.app/og.png">
 
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
+		<!-- JSON-LD Structured Data -->
+		<script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
@@ -91,83 +112,224 @@
     }
     </script>
 
-    <style>
-@font-face {
-  font-family: 'FunnelDisplay';
-  src: url('/fonts/FunnelDisplay-Variable.woff2') format('woff2');
-  font-weight: 400 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Instrument Sans';
-  src: url('/fonts/instrument-sans-v4-latin-500.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-    </style>
-<link rel="preload" href="/fonts/FunnelDisplay-Variable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/instrument-sans-v4-latin-500.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="output.css" as="style">
-    <link rel="stylesheet" href="output.css">
+		<style>
+		@font-face {
+			font-family: "FunnelDisplay";
+			src: url("/fonts/FunnelDisplay-Variable.woff2") format("woff2");
+			font-weight: 400 700;
+			font-style: normal;
+			font-display: swap;
+		}
 
-    <!-- Cal element-click embed code begins -->
-    <script type="text/javascript">
-      ((C, A, L) => { const p = (a, ar) => { a.q.push(ar); }; const d = C.document; C.Cal = C.Cal || function () { const cal = C.Cal; const ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-      Cal("init", "meeting", {origin:"https://app.cal.com"});
-      Cal.ns.meeting("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
-    </script>
-    <!-- Cal element-click embed code ends -->
-</head>
-<body>
-    <main class="container">
-        <div class="title-group">
-            <div class="status">Currently building at Cogniar</div>
+		@font-face {
+			font-family: "Instrument Sans";
+			src: url("/fonts/instrument-sans-v4-latin-500.woff2") format("woff2");
+			font-weight: 500;
+			font-style: normal;
+			font-display: swap;
+		}
+		</style>
+		<link
+			rel="preload"
+			href="/fonts/FunnelDisplay-Variable.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		>
+		<link
+			rel="preload"
+			href="/fonts/instrument-sans-v4-latin-500.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		>
+		<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+		<link rel="preload" href="output.css" as="style">
+		<link rel="stylesheet" href="output.css">
+		<script
+			src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"
+			defer
+		></script>
 
-            <header>
-                <h1>Gonzalo Zanelli</h1>
-            </header>
-        </div>
+		<!-- Cal element-click embed code begins -->
+		<script type="text/javascript">
+		((C, A, L) => {
+			const p = (a, ar) => {
+				a.q.push(ar);
+			};
+			const d = C.document;
+			C.Cal =
+				C.Cal ||
+				function () {
+					const cal = C.Cal;
+					const ar = arguments;
+					if (!cal.loaded) {
+						cal.ns = {};
+						cal.q = cal.q || [];
+						d.head.appendChild(d.createElement("script")).src = A;
+						cal.loaded = true;
+					}
+					if (ar[0] === L) {
+						const api = function () {
+							p(api, arguments);
+						};
+						const namespace = ar[1];
+						api.q = api.q || [];
+						if (typeof namespace === "string") {
+							cal.ns[namespace] = cal.ns[namespace] || api;
+							p(cal.ns[namespace], ar);
+							p(cal, ["initNamespace", namespace]);
+						} else p(cal, ar);
+						return;
+					}
+					p(cal, ar);
+				};
+		})(window, "https://app.cal.com/embed/embed.js", "init");
+		Cal("init", "meeting", { origin: "https://app.cal.com" });
+		Cal.ns.meeting("ui", { hideEventTypeDetails: false, layout: "month_view" });
+		</script>
+		<!-- Cal element-click embed code ends -->
+		<style>
+		.stickman-wrapper {
+			position: fixed;
+			bottom: 0;
+			right: 2rem;
+			width: 60px;
+			height: 120px;
+			z-index: 100;
+			overflow: hidden;
+			pointer-events: auto;
+			cursor: pointer;
+		}
+		.stickman-wrapper svg {
+			width: 100%;
+			height: 100%;
+			overflow: visible;
+		}
+		.stickman-wrapper path,
+		.stickman-wrapper line,
+		.stickman-wrapper circle {
+			stroke: #121212;
+			stroke-width: 2;
+			fill: none;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.stickman-wrapper {
+				display: none;
+			}
+		}
+		@media (max-width: 639.98px) {
+			.stickman-wrapper {
+				width: 50px;
+				height: 100px;
+				right: 1rem;
+			}
+		}
+		</style>
+	</head>
 
-        <section class="bio">
-            <h2 class="sr-only">About Me</h2>
-            <p>
-                <strong>Software Engineer</strong> based in <strong><a href="https://en.wikipedia.org/wiki/Buenos_Aires" target="_blank" rel="noopener noreferrer" class="content-link">Buenos Aires</a></strong>, specialized in building high-performance
-                applications with Bun, TypeScript, and Python. I design robust systems
-                and automate complex workflows using AI-driven strategies.
-            </p>
-        </section>
+	<body>
+		<main class="container">
+			<div class="title-group">
+				<div class="status">Building awesome stuff at Cogniar</div>
+				<h1>Gonzalo Zanelli</h1>
+			</div>
 
-        <section class="education">
-            <h2 class="sr-only">Education</h2>
-            <div class="uni">Information Systems Engineering</div>
-            <p>
-                <span><a href="https://utn.edu.ar/" target="_blank" rel="noopener noreferrer" class="content-link">Universidad Tecnológica Nacional <span class="mobile-hidden">(UTN FRBA)</span></a></span>
-                <span class="desktop-separator"> — </span>
-                <span>Currently Studying</span>
-            </p>
-        </section>
+			<section class="bio">
+				<h2 class="sr-only">About Me</h2>
+				<p>
+					<strong>Software Engineer</strong>
+					based in
+					<strong
+						><a
+							href="https://en.wikipedia.org/wiki/Buenos_Aires"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="content-link"
+							>Buenos Aires</a
+						></strong
+					>, specialized in building high-performance applications with Bun,
+					TypeScript, and Python. I design robust systems and automate complex
+					workflows using AI-driven strategies.
+				</p>
+			</section>
 
-        <section class="cta">
-            <h2 class="cta-title">Want to leverage software and AI to scale your business?</h2>
-            <button
-                type="button"
-                class="cta-button"
-                data-cal-link="gonzalozanelli/meeting"
-                data-cal-namespace="meeting"
-                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-            >
-                Let's talk
-            </button>
-        </section>
+			<section class="education">
+				<h2 class="sr-only">Education</h2>
+				<div class="uni">Information Systems Engineering</div>
+				<p>
+					<span
+						><a
+							href="https://utn.edu.ar/"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="content-link"
+							>Universidad Tecnológica Nacional
+							<span class="mobile-hidden">(UTN FRBA)</span></a
+						></span
+					>
+					<span class="desktop-separator"> — </span>
+					<span>Currently Studying</span>
+				</p>
+			</section>
 
-        <nav>
-            <h2 class="sr-only">Social Links</h2>
-            <a href="https://github.com/zanellig" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://linkedin.com/in/gzanelli" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="mailto:gonzalozanelli1@gmail.com">Email</a>
-        </nav>
-    </main>
-</body>
+			<section class="cta">
+				<h2 class="cta-title">
+					Want to leverage software and AI to scale your business?
+				</h2>
+				<button
+					type="button"
+					class="cta-button"
+					data-cal-link="gonzalozanelli/meeting"
+					data-cal-namespace="meeting"
+					data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+				>
+					Let's talk
+				</button>
+			</section>
+
+			<nav>
+				<h2 class="sr-only">Social Links</h2>
+				<a
+					href="https://github.com/zanellig"
+					target="_blank"
+					rel="noopener noreferrer"
+					>GitHub</a
+				>
+				<a
+					href="https://linkedin.com/in/gzanelli"
+					target="_blank"
+					rel="noopener noreferrer"
+					>LinkedIn</a
+				>
+				<a href="mailto:gonzalozanelli1@gmail.com">Email</a>
+			</nav>
+		</main>
+
+		<!-- Stickman Component -->
+		<div id="stickman-wrapper" class="stickman-wrapper" aria-hidden="true">
+			<svg
+				id="stickman"
+				viewBox="0 0 100 200"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<!-- Head -->
+				<circle id="stickman-head" cx="50" cy="20" r="12" />
+				<!-- Torso -->
+				<line id="stickman-torso" x1="50" y1="32" x2="50" y2="100" />
+				<!-- Left Arm -->
+				<line id="stickman-arm-left" x1="50" y1="50" x2="20" y2="80" />
+				<!-- Right Arm -->
+				<line id="stickman-arm-right" x1="50" y1="50" x2="80" y2="80" />
+				<!-- Left Leg -->
+				<line id="stickman-leg-left" x1="50" y1="100" x2="30" y2="180" />
+				<!-- Right Leg -->
+				<line id="stickman-leg-right" x1="50" y1="100" x2="70" y2="180" />
+			</svg>
+		</div>
+
+		<script type="module" src="/components/stickman/stickman.js"></script>
+	</body>
 </html>
